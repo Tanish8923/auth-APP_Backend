@@ -4,8 +4,13 @@ exports.AuthN = (req , res , next) => {
 
     try {
         
-        const {token} = req.body || req.cookies ;
+        const token = req.body.token || req.cookies.token || req.header("Authorization").replace("Bearer " , "") ;
 
+        // console.log("req.body : " , req.body.token);
+        // console.log("cookie : " , req.cookies.token);
+        // console.log("req.header : " , req.header("Authorization"));
+        
+        
         if(!token){
             return res.status(401).json({
                 success : false , 
@@ -16,7 +21,7 @@ exports.AuthN = (req , res , next) => {
         try {
             
             const decode = jwt.verify(token , process.env.JWT_SECRET);
-            console.log(decode);
+            // console.log(decode);
             req.user = decode ;            
             next();
     
