@@ -11,7 +11,7 @@ exports.AuthN = (req , res , next) => {
         // console.log("req.header : " , req.header("Authorization"));
         
         
-        if(!token || token === undefined){
+        if(!token){
             return res.status(401).json({
                 success : false , 
                 message : "Token not found"
